@@ -1,4 +1,5 @@
-pragma solidity ^0.4.24;
+//pragma solidity ^0.4.24;
+pragma solidity >=0.4.22 <0.9.0;
 
 import "./Ownable.sol";
 
@@ -64,7 +65,7 @@ contract CryptoKats is Ownable {
     return owner;
   }
 
-  function getKat(uint256 katId) public view returns (uint32 color, uint16 generation, uint256 motherId, uint256 fatherId) {
+  function getKat(uint256 katId) public returns (uint32 color, uint16 generation, uint256 motherId, uint256 fatherId) {
     Kat storage kat = kats[katId];
 
     color = kat.color;
@@ -105,7 +106,8 @@ contract CryptoKats is Ownable {
     require(address(this) == _tokenOwner[katId]);
     require(msg.value >= 200 finney);
     _transferFrom(address(this), msg.sender, katId);
-    owner.transfer(msg.value);
+    //owner.transfer(msg.value);
+    address(uint160(owner)).transfer(msg.value);
   }
 
   function _transferFrom(address from, address to, uint256 tokenId) internal {
